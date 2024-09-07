@@ -1,5 +1,5 @@
 import prisma from "../../prisma/client";
-import IUser, { UserProfile, RepresentativeProfile } from "../types/userType";
+import IUser, { UserProfile } from "../types/userType";
 import { SignUpType } from "../types/authType";
 import IUserService from "../interfaces/user.service";
 import ApiError from "../utils/ApiError";
@@ -24,6 +24,7 @@ class UserService implements IUserService {
         passport_expire_date: true,
         first_login: true,
         Nationality: true,
+        Aireway_Company: true,
       },
     });
     if (!user) throw new ApiError("User not found", 404);
@@ -49,6 +50,7 @@ class UserService implements IUserService {
         passport_expire_date: true,
         first_login: true,
         Nationality: true,
+        Aireway_Company: true,
       },
     });
     return user;
@@ -56,7 +58,7 @@ class UserService implements IUserService {
 
   async addAirwayRepresentative(
     data: SignUpType
-  ): Promise<RepresentativeProfile> {
+  ): Promise<UserProfile> {
     const user = await prisma.user.create({
       data: { ...data, role: Roles.AIRWAY_REPRESENTATIVE },
       select: {

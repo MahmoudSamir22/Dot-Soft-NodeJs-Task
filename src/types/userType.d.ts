@@ -40,9 +40,5 @@ export type UserProfile = {
   passport_expire_date: Date | null;
   first_login: boolean;
   Nationality?: INationality | null;
-
-};
-
-export type RepresentativeProfile = UserProfile & {
   Aireway_Company: IAirway_Company | null;
 };
