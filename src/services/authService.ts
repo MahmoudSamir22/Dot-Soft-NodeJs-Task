@@ -11,6 +11,7 @@ import ApiError from "../utils/ApiError";
 import generateOTP, { encrypt } from "../utils/generateOTP";
 import IAuthService from "../interfaces/auth.service";
 import IUser from "../types/userType";
+import { Roles } from "../enum/user.enums";
 
 class AuthService implements IAuthService {
   async signUp(data: SignUpType): Promise<IUser> {
@@ -21,6 +22,7 @@ class AuthService implements IAuthService {
     const user = await prisma.user.create({
       data: {
         ...data,
+        role: Roles.CUSTOMER,
         password: await bcrypt.hash(data.password, 8),
       },
     });

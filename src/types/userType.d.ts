@@ -21,6 +21,28 @@ export default interface IUser {
   createdAt: Date;
 
   Aireway_Company?: IAirway_Company;
-//   User_Codes?: IUser_Codes;
+  //   User_Codes?: IUser_Codes;
   Nationality?: INationality;
 }
+
+export type UserProfile = {
+  id: number;
+  title: string | null;
+  first_name: string;
+  father_name: string | null;
+  family_name: string;
+  gender: string;
+  email: string;
+  phone: string;
+  date_of_birth: Date | null;
+  nationalityId: number | null;
+  passport_number: string | null;
+  passport_expire_date: Date | null;
+  first_login: boolean;
+  Nationality?: INationality | null;
+
+};
+
+export type RepresentativeProfile = UserProfile & {
+  Aireway_Company: IAirway_Company | null;
+};

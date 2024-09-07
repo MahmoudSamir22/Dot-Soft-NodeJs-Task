@@ -26,7 +26,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     if (!user) {
       return next(new ApiError("Unauthorized", 401));
     }
-    (req as CustomRequest).user = user.id;
+    (req as CustomRequest).userId = user.id;
     (req as CustomRequest).role = user.role;
     next();
   } catch (error) {

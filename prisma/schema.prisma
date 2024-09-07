@@ -27,7 +27,7 @@ model User {
   passport_expire_date DateTime?
   airway_CompanyId     Int?
   first_login          Boolean   @default(true)
-  role                 String    @default("USER")
+  role                 String    @default("Customer")
   createdAt            DateTime  @default(now())
 
   Aireway_Company Airway_Company? @relation(fields: [airway_CompanyId], references: [id])
