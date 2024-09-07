@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int       @id @default(autoincrement())
+  title                String?
+  first_name           String
+  father_name          String?
+  family_name          String
+  gender               String
+  email                String    @unique
+  phone                String    @unique
+  login_name           String    @unique
+  password             String
+  date_of_birth        DateTime?
+  nationalityId        Int?
+  passport_number      String?
+  passport_expire_date DateTime?
+  airway_CompanyId     Int?
+  first_login          Boolean   @default(true)
+  role                 String    @default("USER")
+  createdAt            DateTime  @default(now())
+
+  Aireway_Company Airway_Company? @relation(fields: [airway_CompanyId], references: [id])
+  User_Codes      User_Codes?
+  Nationality     Nationality?    @relation(fields: [nationalityId], references: [id])
+}
+
+model User_Codes {
+  id                         Int       @id @default(autoincrement())
+  verifyEmailCode            String?
+  verifyEmailCodeExpiresAt   DateTime?
+  resetPasswordCode          String?
+  resetPasswordCodeExpiresAt DateTime?
+  resetPasswordCodeVerified  Boolean   @default(false)
+  userId                     Int       @unique
+  User                       User      @relation(fields: [userId], references: [id])
+}
+
+model Airway_Company {
+  id        Int       @id @default(autoincrement())
+  name      Json      @db.JsonB
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  Employees User[]
+}
+
+model Nationality {
+  id        Int       @id @default(autoincrement())
+  name      Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  User User[]
+}
