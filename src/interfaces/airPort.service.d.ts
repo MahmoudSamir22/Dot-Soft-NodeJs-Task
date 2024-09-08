@@ -1,13 +1,13 @@
-import INationality, {
-  CreateNationality,
-  NationalityQuery,
-  UpdateNationality,
-} from "../types/nationalityType";
+import IAirPort, {
+  CreateAirPort,
+  AirPortQuery,
+  UpdateAirPort,
+} from "../types/airPortType";
 
-export default interface INationalityService {
-  create(data: CreateNationality): Promise<INationality>;
-  getAll(query: NationalityQuery): Promise<PaginateType<INationality>>;
-  getOne(id: number): Promise<INationality>;
-  update(id: number, data: UpdateNationality): Promise<INationality>;
+export default interface IAirPortService {
+  create(data: CreateAirPort): Promise<IAirPort>;
+  getAll(query: AirPortQuery): Promise<PaginateType<IAirPort>>;
+  getOne(id: number): Promise<IAirPort>;
+  update(id: number, data: UpdateAirPort): Promise<IAirPort>;
   delete(id: number): Promise<void>;
 }
