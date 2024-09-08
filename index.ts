@@ -4,8 +4,11 @@ import cors from "cors";
 config();
 import router from "./src/routers";
 import globalError from "./src/middlewares/errorMiddleware";
+import seeding from "./prisma/seeding";
 
 const app = express();
+
+seeding();
 
 app.use(cors());
 app.use(express.json());

@@ -64,3 +64,13 @@ model Nationality {
 
   User User[]
 }
+
+model Air_Port {
+  id        Int       @id @default(autoincrement())
+  name      Json
+  city      Json
+  country   Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
