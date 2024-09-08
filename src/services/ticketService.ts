@@ -42,7 +42,7 @@ class TicketService implements ITicketService {
     if (moment(ticket.Flight?.flight_date).diff(moment(), "hours") < 72) {
       throw new ApiError("You can't cancel ticket 72 hours before flight", 400);
     }
-    if (ticket.userId !== userId || ticket.operatorId !== userId) {
+    if (ticket.userId !== userId && ticket.operatorId !== userId) {
       throw new ApiError("You can't cancel other user's ticket", 403);
     }
     await prisma.ticket.update({
