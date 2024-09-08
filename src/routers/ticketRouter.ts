@@ -13,7 +13,7 @@ router
 
 router
   .route("/:id")
-  .get(auth, ticketController.bookTicket)
+  .get(auth, ticketController.getOne)
   .delete(auth, ticketController.cancel);
 
 export default router;
