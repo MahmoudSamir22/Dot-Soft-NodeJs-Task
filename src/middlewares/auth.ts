@@ -21,6 +21,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       select: {
         id: true,
         role: true,
+        airway_CompanyId: true,
       },
     });
     if (!user) {
@@ -28,6 +29,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     }
     (req as CustomRequest).userId = user.id;
     (req as CustomRequest).role = user.role;
+    (req as CustomRequest).companyId = user.airway_CompanyId;
     next();
   } catch (error) {
     next(new ApiError("Invalid Token", 401));
