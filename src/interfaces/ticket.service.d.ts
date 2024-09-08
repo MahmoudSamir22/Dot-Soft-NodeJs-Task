@@ -5,5 +5,5 @@ export default interface ITicketService {
   bookTicket(data: CreateTicket): Promise<ITicket>;
   getAll(query: TicketQuery): Promise<PaginateType<ITicket>>;
   getOne(id: number): Promise<ITicket>;
-  cancel(id: number): Promise<void>;
+  cancel(id: number, userId: number): Promise<void>;
 }

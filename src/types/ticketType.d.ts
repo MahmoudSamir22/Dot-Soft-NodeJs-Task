@@ -6,14 +6,14 @@ export default interface ITicket {
   id: number;
   userId: number;
   flightId: number;
-  operatorId: number;
+  operatorId: number | null;
   seats: number;
   createdAt: Date;
   updatedAt: Date;
   canceledAt: Date | null;
 
   User?: IUser;
-  Operator?: IUser;
+  Operator?: IUser | null;
   Flight?: IFlight;
 }
 

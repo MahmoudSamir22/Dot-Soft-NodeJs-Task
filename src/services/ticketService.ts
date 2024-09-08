@@ -4,6 +4,7 @@ import { paginate } from "../utils/pagination";
 import { PaginateType } from "../types/paginateType";
 import ITicketService from "../interfaces/ticket.service";
 import ApiError from "../utils/ApiError";
+import moment from "moment";
 
 class TicketService implements ITicketService {
   async bookTicket(data: CreateTicket): Promise<ITicket> {
@@ -28,13 +29,22 @@ class TicketService implements ITicketService {
       where: {
         id,
       },
+      include: {
+        Flight: true,
+      },
     });
     if (!ticket) throw new ApiError("Ticket not found", 404);
     return ticket;
   }
 
-  async cancel(id: number): Promise<void> {
+  async cancel(id: number, userId: number): Promise<void> {
     const ticket = await this.getOne(id);
+    if (moment(ticket.Flight?.flight_date).diff(moment(), "hours") < 72) {
+      throw new ApiError("You can't cancel ticket 72 hours before flight", 400);
+    }
+    if (ticket.userId !== userId || ticket.operatorId !== userId) {
+      throw new ApiError("You can't cancel other user's ticket", 403);
+    }
     await prisma.ticket.update({
       where: {
         id,
@@ -43,7 +53,7 @@ class TicketService implements ITicketService {
         canceledAt: new Date(),
       },
     });
-  }
+  } 
 }
 
 const ticketService = new TicketService();
