@@ -26,21 +26,20 @@ export type ForgetPasswordReturnType = {
 };
 
 export type VerifyResetPassword = {
-    email: string;
-    code: string;
-}
+  email: string;
+  code: string;
+};
 
 export type ResetPassword = {
-    email: string;
-    password: string;
-}
+  email: string;
+  password: string;
+};
 
 export type ChangeFirstTimeLoginPassword = {
-    email: string;
-    password: string;
-    newPassword: string;
-}
-
+  email: string;
+  password: string;
+  newPassword: string;
+};
 
 export type AddAirwayRepresentativeType = {
   first_name: string;
@@ -51,4 +50,9 @@ export type AddAirwayRepresentativeType = {
   login_name: string;
   password: string;
   airway_CompanyId: number;
+};
+
+export type ChangePassword = {
+  oldPassword: string;
+  newPassword: string;
 };

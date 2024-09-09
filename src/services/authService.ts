@@ -7,6 +7,7 @@ import {
   ForgetPasswordReturnType,
   ChangeFirstTimeLoginPassword,
   AddAirwayRepresentativeType,
+  ChangePassword,
 } from "../types/authType";
 import bcrypt from "bcrypt";
 import ApiError from "../utils/ApiError";
@@ -215,6 +216,25 @@ class AuthService implements IAuthService {
       },
     });
     return user;
+  }
+
+  async changePassword(userId: number, data: ChangePassword): Promise<void> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) throw new ApiError("User not found", 404);
+    const passwordMatch = await bcrypt.compare(data.oldPassword, user.password);
+    if (!passwordMatch) throw new ApiError("Incorrect password", 400);
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        password: await bcrypt.hash(data.newPassword, 8),
+      },
+    });
   }
 
   private async checkFieldExists(

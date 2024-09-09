@@ -6,7 +6,9 @@ import {
   loginValidationSchema,
   changeFirstTimePasswordSchema,
   addAirwayRepresentativeSchema,
+  changePasswordSchema,
 } from "../validations/authValidation";
+import auth from "../middlewares/auth";
 const router = Router();
 
 router.post(
@@ -39,6 +41,13 @@ router.post(
   "/add-airway-representative",
   joiMiddleware(addAirwayRepresentativeSchema),
   authController.addAirwayRepresentative
+);
+
+router.post(
+  "/change-password",
+  auth ,
+  joiMiddleware(changePasswordSchema),
+  authController.changePassword
 );
 
 export default router;

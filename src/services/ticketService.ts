@@ -5,18 +5,35 @@ import { PaginateType } from "../types/paginateType";
 import ITicketService from "../interfaces/ticket.service";
 import ApiError from "../utils/ApiError";
 import moment from "moment";
+import flightService from "./flightService";
 
 class TicketService implements ITicketService {
   async bookTicket(data: CreateTicket): Promise<ITicket> {
+    await flightService.getOne(data.flightId);
     return prisma.ticket.create({ data });
   }
 
-  async getAll(query: TicketQuery): Promise<PaginateType<ITicket>> {
+  async getMyTickets(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>> {
     return paginate(
       "ticket",
       {
         where: {
           canceledAt: null,
+          userId,
+        },
+      },
+      query.page,
+      query.limit
+    );
+  }
+
+  async getMyReservations(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>> {
+    return paginate(
+      "ticket",
+      {
+        where: {
+          canceledAt: null,
+          operatorId: userId,
         },
       },
       query.page,

@@ -4,6 +4,7 @@ import {
   LoginType,
   ChangeFirstTimeLoginPassword,
   AddAirwayRepresentativeType,
+  ChangePassword,
 } from "../types/authType";
 import { Genders, Titles } from "../enum/user.enums";
 
@@ -52,3 +53,8 @@ export const addAirwayRepresentativeSchema =
     phone: Joi.string().required(),
     airway_CompanyId: Joi.number().strict().required(),
   });
+
+export const changePasswordSchema = Joi.object<ChangePassword>().keys({
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required(),
+});

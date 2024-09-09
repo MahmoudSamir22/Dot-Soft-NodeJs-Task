@@ -8,8 +8,10 @@ const router = Router();
 
 router
   .route("/")
-  .get(auth, ticketController.getAll)
+  .get(auth, ticketController.getMyTickets)
   .post(auth, joiMiddleWare(bookTicketSchema), ticketController.bookTicket);
+
+router.get("/reservations", auth, ticketController.getMyReservations);
 
 router
   .route("/:id")
