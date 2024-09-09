@@ -5,18 +5,35 @@ import {
   createAirPortSchema,
   updateAirPortSchema,
 } from "../validations/airPortValidation";
+import authorization from "../middlewares/authorization";
+import { Roles } from "../enum/user.enums";
+import auth from "../middlewares/auth";
 
 const router = Router();
 
 router
   .route("/")
   .get(airPortController.getAll)
-  .post(joiMiddleWare(createAirPortSchema), airPortController.create);
+  .post(
+    auth,
+    authorization(Roles.SYSTEM_ADMIN),
+    joiMiddleWare(createAirPortSchema),
+    airPortController.create
+  );
 
 router
   .route("/:id")
   .get(airPortController.getOne)
-  .patch(joiMiddleWare(updateAirPortSchema), airPortController.update)
-  .delete(airPortController.delete);
+  .patch(
+    auth,
+    authorization(Roles.SYSTEM_ADMIN),
+    joiMiddleWare(updateAirPortSchema),
+    airPortController.update
+  )
+  .delete(
+    auth,
+    authorization(Roles.SYSTEM_ADMIN),
+    airPortController.delete
+  );
 
 export default router;
