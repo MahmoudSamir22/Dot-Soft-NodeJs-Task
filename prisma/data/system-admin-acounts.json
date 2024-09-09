@@ -1,0 +1,35 @@
+[
+  {
+    "email": "sys_admin@example.com",
+    "login_name": "sys_admin",
+    "password": "Pa$$word123",
+    "date_of_birth": "1992-05-15T00:00:00.000Z",
+    "title": "Mr",
+    "first_name": "Sys",
+    "family_name": "Admin",
+    "gender": "Male",
+    "phone": "+1234567890"
+  },
+  {
+    "email": "sys_admin1@example.com",
+    "login_name": "sys_admin1",
+    "password": "Pa$$word123",
+    "date_of_birth": "1992-05-15T00:00:00.000Z",
+    "title": "Mr",
+    "first_name": "Sys",
+    "family_name": "Admin1",
+    "gender": "Male",
+    "phone": "+1234567891"
+  },
+  {
+    "email": "sys_admin2@example.com",
+    "login_name": "sys_admin2",
+    "password": "Pa$$word123",
+    "date_of_birth": "1992-05-15T00:00:00.000Z",
+    "title": "Mr",
+    "first_name": "Sys",
+    "family_name": "Admin2",
+    "gender": "Male",
+    "phone": "+1234567892"
+  }
+]
