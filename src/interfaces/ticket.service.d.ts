@@ -1,4 +1,4 @@
-import ITicket, { CreateTicket, TicketQuery } from "../types/ticketType";
+import ITicket, { CreateTicket, TicketQuery, CancelationReason } from "../types/ticketType";
 import { PaginateType } from "../types/paginateType";
 
 export default interface ITicketService {
@@ -6,5 +6,5 @@ export default interface ITicketService {
   getMyTickets(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>>;
   getMyReservations(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>>;
   getOne(id: number): Promise<ITicket>;
-  cancel(id: number, userId: number): Promise<void>;
+  cancel(id: number, userId: number, data: CancelationReason): Promise<void>;
 }

@@ -30,12 +30,13 @@ model User {
   role                 String    @default("Customer")
   createdAt            DateTime  @default(now())
 
-  Aireway_Company Airway_Company? @relation(fields: [airway_CompanyId], references: [id])
-  User_Codes      User_Codes?
-  Nationality     Nationality?    @relation(fields: [nationalityId], references: [id])
-  Tickets         Ticket[]        @relation("User")
-  Reservations    Ticket[]        @relation("Operator")
-  Flights         Flight[]
+  Aireway_Company    Airway_Company?      @relation(fields: [airway_CompanyId], references: [id])
+  User_Codes         User_Codes?
+  Nationality        Nationality?         @relation(fields: [nationalityId], references: [id])
+  Tickets            Ticket[]             @relation("User")
+  Reservations       Ticket[]             @relation("Operator")
+  Flights            Flight[]
+  Cancelation_Reason Cancelation_Reason[]
 }
 
 model User_Codes {
@@ -113,7 +114,16 @@ model Ticket {
   updatedAt  DateTime  @updatedAt
   canceledAt DateTime?
 
-  User     User   @relation("User", fields: [userId], references: [id])
-  Operator User?  @relation("Operator", fields: [operatorId], references: [id])
-  Flight   Flight @relation(fields: [flightId], references: [id])
+  User               User                @relation("User", fields: [userId], references: [id])
+  Operator           User?               @relation("Operator", fields: [operatorId], references: [id])
+  Flight             Flight              @relation(fields: [flightId], references: [id])
+  Cancelation_Reason Cancelation_Reason?
+}
+
+model Cancelation_Reason {
+  reason      String
+  ticketId    Int      @unique
+  operatorId  Int
+  Canceled_By User     @relation(fields: [operatorId], references: [id])
+  Ticket      Ticket   @relation(fields: [ticketId], references: [id])
 }

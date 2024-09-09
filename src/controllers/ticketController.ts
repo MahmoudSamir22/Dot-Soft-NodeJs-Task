@@ -68,7 +68,7 @@ class TicketController {
   async cancel(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req as CustomRequest;
-      await ticketService.cancel(+req.params.id, userId);
+      await ticketService.cancel(+req.params.id, userId, req.body);
       response(res, 200, {
         status: true,
         message: "Ticket canceled",

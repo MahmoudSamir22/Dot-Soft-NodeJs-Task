@@ -1,5 +1,9 @@
 import prisma from "../../prisma/client";
-import ITicket, { CreateTicket, TicketQuery } from "../types/ticketType";
+import ITicket, {
+  CancelationReason,
+  CreateTicket,
+  TicketQuery,
+} from "../types/ticketType";
 import { paginate } from "../utils/pagination";
 import { PaginateType } from "../types/paginateType";
 import ITicketService from "../interfaces/ticket.service";
@@ -13,12 +17,14 @@ class TicketService implements ITicketService {
     return prisma.ticket.create({ data });
   }
 
-  async getMyTickets(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>> {
+  async getMyTickets(
+    userId: number,
+    query: TicketQuery
+  ): Promise<PaginateType<ITicket>> {
     return paginate(
       "ticket",
       {
         where: {
-          canceledAt: null,
           userId,
         },
       },
@@ -27,12 +33,14 @@ class TicketService implements ITicketService {
     );
   }
 
-  async getMyReservations(userId: number, query: TicketQuery): Promise<PaginateType<ITicket>> {
+  async getMyReservations(
+    userId: number,
+    query: TicketQuery
+  ): Promise<PaginateType<ITicket>> {
     return paginate(
       "ticket",
       {
         where: {
-          canceledAt: null,
           operatorId: userId,
         },
       },
@@ -54,23 +62,44 @@ class TicketService implements ITicketService {
     return ticket;
   }
 
-  async cancel(id: number, userId: number): Promise<void> {
+  async cancel(
+    id: number,
+    userId: number,
+    data: CancelationReason
+  ): Promise<void> {
     const ticket = await this.getOne(id);
-    if (moment(ticket.Flight?.flight_date).diff(moment(), "hours") < 72) {
+    if (
+      moment(ticket.Flight?.flight_date).diff(moment(), "hours") < 72 &&
+      ticket.userId === userId
+    ) {
       throw new ApiError("You can't cancel ticket 72 hours before flight", 400);
     }
     if (ticket.userId !== userId && ticket.operatorId !== userId) {
       throw new ApiError("You can't cancel other user's ticket", 403);
     }
+    if (ticket.operatorId === userId && !data.reason)
+      throw new ApiError(
+        "You have to provide a reason for the cancelation",
+        400
+      );
     await prisma.ticket.update({
       where: {
         id,
       },
       data: {
         canceledAt: new Date(),
+        Cancelation_Reason:
+          data.reason && userId == ticket.operatorId
+            ? {
+                create: {
+                  operatorId: userId,
+                  reason: data.reason,
+                },
+              }
+            : undefined,
       },
     });
-  } 
+  }
 }
 
 const ticketService = new TicketService();

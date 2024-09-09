@@ -36,3 +36,7 @@ export type TicketQuery = Partial<
     seats: number;
   }
 >;
+
+export type CancelationReason = {
+  reason: string;
+};
