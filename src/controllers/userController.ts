@@ -31,23 +31,6 @@ class UserController {
       next(error);
     }
   }
-
-  async addAirwayRepresentative(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    try {
-      const user = await userService.addAirwayRepresentative(req.body);
-      response(res, 201, {
-        status: true,
-        message: "Airway representative added successfully",
-        data: user,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
 }
 
 const userController = new UserController();

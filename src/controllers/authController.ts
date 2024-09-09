@@ -105,6 +105,23 @@ class AuthController {
       next(error);
     }
   }
+
+  async addAirwayRepresentative(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const user = await authService.addAirwayRepresentative(req.body);
+      response(res, 201, {
+        status: true,
+        message: "Airway representative added successfully",
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 const authController = new AuthController();
 export default authController;

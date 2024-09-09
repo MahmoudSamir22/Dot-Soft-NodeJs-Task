@@ -4,7 +4,8 @@ import joiMiddleware from "../middlewares/joiMiddleware";
 import {
   registerValidationSchema,
   loginValidationSchema,
-  changeFirstTimePasswordSchema
+  changeFirstTimePasswordSchema,
+  addAirwayRepresentativeSchema,
 } from "../validations/authValidation";
 const router = Router();
 
@@ -32,6 +33,12 @@ router.post(
   "/first-time-password",
   joiMiddleware(changeFirstTimePasswordSchema),
   authController.changeFirstTimePassword
+);
+
+router.post(
+  "/add-airway-representative",
+  joiMiddleware(addAirwayRepresentativeSchema),
+  authController.addAirwayRepresentative
 );
 
 export default router;

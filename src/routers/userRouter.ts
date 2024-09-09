@@ -5,8 +5,6 @@ import auth from "../middlewares/auth";
 
 const router = Router();
 
-router.route("/").post(userController.addAirwayRepresentative);
-
 router
   .route("/profile")
   .get(auth, userController.getProfile)

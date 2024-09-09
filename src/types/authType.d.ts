@@ -40,3 +40,15 @@ export type ChangeFirstTimeLoginPassword = {
     password: string;
     newPassword: string;
 }
+
+
+export type AddAirwayRepresentativeType = {
+  first_name: string;
+  family_name: string;
+  gender: string;
+  email: string;
+  phone: string;
+  login_name: string;
+  password: string;
+  airway_CompanyId: number;
+};

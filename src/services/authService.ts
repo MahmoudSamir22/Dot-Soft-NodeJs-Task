@@ -6,6 +6,7 @@ import {
   VerifyResetPassword,
   ForgetPasswordReturnType,
   ChangeFirstTimeLoginPassword,
+  AddAirwayRepresentativeType,
 } from "../types/authType";
 import bcrypt from "bcrypt";
 import ApiError from "../utils/ApiError";
@@ -13,12 +14,15 @@ import generateOTP, { encrypt } from "../utils/generateOTP";
 import IAuthService from "../interfaces/auth.service";
 import IUser, { UserProfile } from "../types/userType";
 import { Roles } from "../enum/user.enums";
+import nationalityService from "./nationalityService";
+import airwayCompanyService from "./airwayCompanyService";
 
 class AuthService implements IAuthService {
   async signUp(data: SignUpType): Promise<IUser> {
     await this.checkFieldExists("email", data.email);
     await this.checkFieldExists("phone", data.phone);
     await this.checkFieldExists("login_name", data.login_name);
+    await nationalityService.getOne(data.nationalityId);
 
     const user = await prisma.user.create({
       data: {
@@ -175,6 +179,42 @@ class AuthService implements IAuthService {
         Aireway_Company: true,
       },
     });
+  }
+
+  async addAirwayRepresentative(
+    data: AddAirwayRepresentativeType
+  ): Promise<UserProfile> {
+    await this.checkFieldExists("email", data.email);
+    await this.checkFieldExists("phone", data.phone);
+    await this.checkFieldExists("login_name", data.login_name);
+    await airwayCompanyService.getOne(data.airway_CompanyId);
+
+    const user = await prisma.user.create({
+      data: {
+        ...data,
+        role: Roles.AIRWAY_REPRESENTATIVE,
+        password: await bcrypt.hash(data.password, 8),
+      },
+      select: {
+        id: true,
+        title: true,
+        first_name: true,
+        father_name: true,
+        family_name: true,
+        gender: true,
+        email: true,
+        phone: true,
+        date_of_birth: true,
+        nationalityId: true,
+        passport_number: true,
+        passport_expire_date: true,
+        first_login: true,
+        role: true,
+        Nationality: true,
+        Aireway_Company: true,
+      },
+    });
+    return user;
   }
 
   private async checkFieldExists(

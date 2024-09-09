@@ -6,6 +6,7 @@ import {
   VerifyResetPassword,
   ResetPassword,
   ChangeFirstTimeLoginPassword,
+  AddAirwayRepresentativeType
 } from "../types/authType";
 
 export default interface IAuthService {
@@ -17,4 +18,5 @@ export default interface IAuthService {
   changeFirstTimePassword(
     data: ChangeFirstTimeLoginPassword
   ): Promise<UserProfile>;
+  addAirwayRepresentative(data: AddAirwayRepresentativeType): Promise<UserProfile>;
 }
