@@ -1,6 +1,6 @@
 # Dot Soft Backend Task
 
-This is a backend project created using Node.js, TypeScript, Prisma, and PostgreSQL.
+This is a backend web application for an air ticket reservations system created using Node.js, TypeScript, Prisma, and PostgreSQL.
 
 ## Table of Contents
 
@@ -9,7 +9,6 @@ This is a backend project created using Node.js, TypeScript, Prisma, and Postgre
 - [Environment Setup](#environment-setup)
 - [Database Setup](#database-setup)
 - [Running the Application](#running-the-application)
-- [License](#license)
 
 ## Prerequisites
 
