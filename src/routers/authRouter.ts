@@ -24,8 +24,6 @@ router.post(
   authController.login
 );
 
-router.post("/add-users", authController.addUsers);
-
 router.post("/forget-password", authController.forgetPassword);
 
 router.post("/verify-reset-code", authController.verifyResetCode);
