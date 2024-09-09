@@ -5,9 +5,6 @@ import auth from "../middlewares/auth";
 
 const router = Router();
 
-router
-  .route("/profile")
-  .get(auth, userController.getProfile)
-  .patch(auth, userController.updateProfile);
+router.route("/profile").get(auth, userController.getProfile);
 
 export default router;

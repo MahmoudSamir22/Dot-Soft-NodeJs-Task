@@ -7,6 +7,10 @@ import pug from "pug";
 import CustomRequest from "../interfaces/customRequest";
 
 class AuthController {
+  // @return 201 status code with success message and created user
+  // @throw 400 status code if phone already exists
+  // @throw 400 status code if email already exists
+  // @throw 400 status code if login_name already exists
   async signUpUser(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await authService.signUp(req.body);
@@ -20,6 +24,9 @@ class AuthController {
     }
   }
 
+  // @return 200 status code with success message and logged in user with token
+  // @throw 400 status code if user not found
+  // @throw 400 status code if password is incorrect
   async login(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await authService.login(req.body);
@@ -35,19 +42,8 @@ class AuthController {
     }
   }
 
-  async addUsers(req: Request, res: Response, next: NextFunction) {
-    try {
-      const user = await authService.signUp(req.body);
-      response(res, 201, {
-        status: true,
-        message: "User created successfully!",
-        data: user,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-
+  // @return 200 status code with success message and logged in user with token
+  // @throw 404 status code if user not found
   async forgetPassword(req: Request, res: Response, next: NextFunction) {
     try {
       const user = await authService.forgetPassword(req.body.email);
@@ -65,6 +61,8 @@ class AuthController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if user not found
   async verifyResetCode(req: Request, res: Response, next: NextFunction) {
     try {
       await authService.verifyResetPasswordCode(req.body);
@@ -77,6 +75,8 @@ class AuthController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if user not found
   async resetPassword(req: Request, res: Response, next: NextFunction) {
     try {
       await authService.resetPassword(req.body);
@@ -89,6 +89,9 @@ class AuthController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if user not found
+  // @throw 400 status code if password is incorrect
   async changeFirstTimePassword(
     req: Request,
     res: Response,
@@ -107,6 +110,11 @@ class AuthController {
     }
   }
 
+  // @return 201 status code with success message
+  // @throw 400 status code if phone already exists
+  // @throw 400 status code if email already exists
+  // @throw 400 status code if login_name already exists
+  // @throw 404 status code if company not found
   async addAirwayRepresentative(
     req: Request,
     res: Response,
@@ -124,6 +132,8 @@ class AuthController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 400 status code if old password is incorrect
   async changePassword(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req as CustomRequest;

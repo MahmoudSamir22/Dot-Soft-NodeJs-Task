@@ -8,6 +8,7 @@ import {
 import CustomRequest from "../interfaces/customRequest";
 
 class AirPortController {
+  // @return 201 status code with success message and created air port
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const airPort = await airPortService.create(req.body);
@@ -20,7 +21,8 @@ class AirPortController {
       next(error);
     }
   }
-
+ 
+  // @return 200 status code with success message and all air ports
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -36,6 +38,8 @@ class AirPortController {
     }
   }
 
+  // @return 200 status code with success message and one air
+  // @throw 404 status code if air port not found
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -50,6 +54,8 @@ class AirPortController {
     }
   }
 
+  // @return 200 status code with success message and updated
+  // @throw 404 status code if air port not found
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const airPort = await airPortService.update(+req.params.id, req.body);
@@ -63,6 +69,8 @@ class AirPortController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if air port not found
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       await airPortService.delete(+req.params.id);

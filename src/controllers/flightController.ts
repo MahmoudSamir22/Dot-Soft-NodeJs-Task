@@ -9,6 +9,10 @@ import {
 } from "../utils/serialization/flight.serialization";
 
 class FlightController {
+  // @return 201 status code with success message and created flight
+  // @throw 400 status code if user is not in a company
+  // @throw 400 status code if flight number already exists
+  // @thorw 404 status code if airport does not exist
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId, companyId } = req as CustomRequest;
@@ -30,6 +34,7 @@ class FlightController {
     }
   }
 
+  // @return 200 status code with success message and all flights
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -45,6 +50,7 @@ class FlightController {
     }
   }
 
+  // @return 200 status code with success message and one flight
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -59,6 +65,10 @@ class FlightController {
     }
   }
 
+  // @return 200 status code with success message and updated flight
+  // @throw 404 status code if flight not found
+  // @throw 400 status code if flight date is in the past
+  // @throw 400 status code if flight number already exists
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const flight = await flightService.update(+req.params.id, req.body);
@@ -72,6 +82,8 @@ class FlightController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if flight not found
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       await flightService.delete(+req.params.id);

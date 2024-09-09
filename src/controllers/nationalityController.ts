@@ -8,6 +8,7 @@ import {
 import CustomRequest from "../interfaces/customRequest";
 
 class NationalityController {
+  // @return 201 status code with success message and created
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const nationality = await nationalityService.create(req.body);
@@ -21,6 +22,7 @@ class NationalityController {
     }
   }
 
+  // @return 200 status code with success message and all nationalities
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -36,6 +38,8 @@ class NationalityController {
     }
   }
 
+  // @return 200 status code with success
+  // @throw 404 status if nationality not found
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -50,6 +54,8 @@ class NationalityController {
     }
   }
 
+  // @return 200 status code with success message and updated
+  // @throw 404 status if nationality not found
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const nationality = await nationalityService.update(
@@ -66,6 +72,8 @@ class NationalityController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status if nationality not found
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       await nationalityService.delete(+req.params.id);

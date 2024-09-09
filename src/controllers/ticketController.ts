@@ -9,6 +9,8 @@ import {
 } from "../utils/serialization/ticket.serialization";
 
 class TicketController {
+  // @return 201 status code with success message and created ticket
+  // @throw 400 status code if user is not in a company
   async bookTicket(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId, role } = req as CustomRequest;
@@ -27,6 +29,7 @@ class TicketController {
     }
   }
 
+  // @return 200 status code with success message and all tickets
   async getMyTickets(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId, skipLang, language } = req as CustomRequest;
@@ -42,6 +45,7 @@ class TicketController {
     }
   }
 
+  // @return 200 status code with success message and all reservations
   async getMyReservations(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId, skipLang, language } = req as CustomRequest;
@@ -57,6 +61,8 @@ class TicketController {
     }
   }
 
+  // @return 200 status code with success message and all tickets
+  // @throw 404 status code if user not found
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { skipLang, language } = req as CustomRequest;
@@ -71,6 +77,8 @@ class TicketController {
     }
   }
 
+  // @return 200 status code with success message and updated ticket
+  // @throw 404 status code if ticket not found
   async cancel(req: Request, res: Response, next: NextFunction) {
     try {
       const { userId } = req as CustomRequest;

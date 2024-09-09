@@ -8,6 +8,7 @@ import {
 import CustomRequest from "../interfaces/customRequest";
 
 class AirwayCompanyController {
+  // @return 201 status code with success message and created airway company
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       const airwayCompany = await airwayCompanyService.create(req.body);
@@ -21,6 +22,7 @@ class AirwayCompanyController {
     }
   }
 
+  // @return 200 status code with success message and all airway companies
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -36,6 +38,8 @@ class AirwayCompanyController {
     }
   }
 
+  // @return 200 status code with success message and one airway company
+  // @throw 404 status code if airway company not found
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { language, skipLang } = req as CustomRequest;
@@ -52,6 +56,8 @@ class AirwayCompanyController {
     }
   }
 
+  // @return 200 status code with success message and updated airway company
+  // @throw 404 status code if airway company not found
   async update(req: Request, res: Response, next: NextFunction) {
     try {
       const airwayCompany = await airwayCompanyService.update(
@@ -68,6 +74,8 @@ class AirwayCompanyController {
     }
   }
 
+  // @return 200 status code with success message
+  // @throw 404 status code if airway company not found
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
       await airwayCompanyService.delete(+req.params.id);
