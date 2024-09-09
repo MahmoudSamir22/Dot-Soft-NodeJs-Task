@@ -19,6 +19,10 @@ import nationalityService from "./nationalityService";
 import airwayCompanyService from "./airwayCompanyService";
 
 class AuthService implements IAuthService {
+  // @description: Sign up a new user
+  // @throw 400 status code if email already exists
+  // @throw 400 status code if phone already exists
+  // @throw 400 status code if login name already exists
   async signUp(data: SignUpType): Promise<IUser> {
     await this.checkFieldExists("email", data.email);
     await this.checkFieldExists("phone", data.phone);
@@ -36,6 +40,9 @@ class AuthService implements IAuthService {
     return user;
   }
 
+  // @description: Login a user
+  // @throw 400 status code if user not found
+  // @throw 400 status code if password is incorrect
   async login(data: LoginType): Promise<UserProfile> {
     const user = await prisma.user.findFirst({
       where: {
@@ -82,6 +89,8 @@ class AuthService implements IAuthService {
     return rest;
   }
 
+  // @description: Forget password and send reset code to email
+  // @throw 404 status code if user not found
   async forgetPassword(email: string): Promise<ForgetPasswordReturnType> {
     const user = await prisma.user.findUnique({
       where: {
@@ -109,6 +118,8 @@ class AuthService implements IAuthService {
     return { email: user.email, code: codes.otp, username: user.first_name };
   }
 
+  // @description: Verify reset code
+  // @throw 400 status code if code is invalid or expired
   async verifyResetPasswordCode(data: VerifyResetPassword): Promise<void> {
     const hashedOTP = encrypt(data.code);
     const userCode = await prisma.user_Codes.findFirst({
@@ -127,6 +138,7 @@ class AuthService implements IAuthService {
     }
   }
 
+  // @description: Reset password
   async resetPassword(data: ResetPassword): Promise<void> {
     await prisma.user.update({
       where: {
@@ -138,6 +150,9 @@ class AuthService implements IAuthService {
     });
   }
 
+  // @description: Change first time login password
+  // @throw 400 status code if email or password is incorrect
+  // @throw 400 status code if new password is same as old password
   async changeFirstTimePassword(
     data: ChangeFirstTimeLoginPassword
   ): Promise<UserProfile> {
@@ -182,6 +197,11 @@ class AuthService implements IAuthService {
     });
   }
 
+  // @description: Add airway representative
+  // @throw 400 status code if phone already exists
+  // @throw 400 status code if email already exists
+  // @throw 400 status code if login name already exists
+  // @throw 404 status code if company not found
   async addAirwayRepresentative(
     data: AddAirwayRepresentativeType
   ): Promise<UserProfile> {
@@ -218,6 +238,9 @@ class AuthService implements IAuthService {
     return user;
   }
 
+  // @description: Change password
+  // @throw 404 status code if user not found
+  // @throw 400 status code if old password is incorrect
   async changePassword(userId: number, data: ChangePassword): Promise<void> {
     const user = await prisma.user.findUnique({
       where: {
@@ -237,6 +260,7 @@ class AuthService implements IAuthService {
     });
   }
 
+  // @description: Check if field exists with value
   private async checkFieldExists(
     field: "email" | "phone" | "login_name",
     value: string

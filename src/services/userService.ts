@@ -6,6 +6,8 @@ import ApiError from "../utils/ApiError";
 import { Roles } from "../enum/user.enums";
 
 class UserService implements IUserService {
+  // @description: Get User Profile Details
+  // @throw 404 status code if user not found
   async getProfile(id: number): Promise<UserProfile> {
     const user = await prisma.user.findUnique({
       where: { id },

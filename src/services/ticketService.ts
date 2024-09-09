@@ -12,11 +12,14 @@ import moment from "moment";
 import flightService from "./flightService";
 
 class TicketService implements ITicketService {
+  // @description: Book a ticket
+  // @throw 404 status code if flight not found
   async bookTicket(data: CreateTicket): Promise<ITicket> {
     await flightService.getOne(data.flightId);
     return prisma.ticket.create({ data });
   }
 
+  // @description: Get all tickets
   async getMyTickets(
     userId: number,
     query: TicketQuery
@@ -42,6 +45,7 @@ class TicketService implements ITicketService {
     );
   }
 
+  // @description: Get all reservations for an operator
   async getMyReservations(
     userId: number,
     query: TicketQuery
@@ -67,6 +71,8 @@ class TicketService implements ITicketService {
     );
   }
 
+  // @description: Get one ticket
+  // @throw 404 status code if ticket not found
   async getOne(id: number): Promise<ITicket> {
     const ticket = await prisma.ticket.findUnique({
       where: {
@@ -86,6 +92,10 @@ class TicketService implements ITicketService {
     return ticket;
   }
 
+  // @description: Cancel a ticket
+  // @throw 400 status code if the user tries to cancel less than 72 hours before the flight
+  // @throw 403 status code if the user tries to cancel other user's ticket
+  // @throw 400 status code if the operator tries to cancel a ticket without providing a reason
   async cancel(
     id: number,
     userId: number,

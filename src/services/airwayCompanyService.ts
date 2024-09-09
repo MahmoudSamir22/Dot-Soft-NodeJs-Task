@@ -10,6 +10,7 @@ import { paginate } from "../utils/pagination";
 import { PaginateType } from "../types/paginateType";
 
 class AirwayCompanyService implements IAirwayCompanyService {
+  // @description: Create a new airway company
   async create(data: CreateAirwayCompany): Promise<IAirway_Company> {
     const airwayCompany = await prisma.airway_Company.create({
       data,
@@ -17,12 +18,15 @@ class AirwayCompanyService implements IAirwayCompanyService {
     return airwayCompany;
   }
 
+  // @description: Get all airway companies
   async getAll(query: AirwayCompanyQuery): Promise<PaginateType<IAirway_Company>> {
     return paginate("airway_Company",{where: {
       deletedAt: null,
     }}, query.page, query.limit);
   }
 
+  // @description: Get one airway company
+  // @throw 404 status code if airway company not found
   async getOne(id: number): Promise<IAirway_Company> {
     const airwayCompany = await prisma.airway_Company.findUnique({
       where: {
@@ -35,6 +39,8 @@ class AirwayCompanyService implements IAirwayCompanyService {
     return airwayCompany;
   }
 
+  // @description: Update an airway company
+  // @throw 404 status code if airway company not found
   async update(
     id: number,
     data: UpdateAirwayCompany
@@ -49,6 +55,8 @@ class AirwayCompanyService implements IAirwayCompanyService {
     return airwayCompany;
   }
 
+  // @description: Soft delete an airway company
+  // @throw 404 status code if airway company not found
   async delete(id: number): Promise<void> {
     await this.getOne(id);
     await prisma.airway_Company.update({
