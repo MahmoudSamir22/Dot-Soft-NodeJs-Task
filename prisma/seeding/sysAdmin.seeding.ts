@@ -16,6 +16,7 @@ export default async function seedNationality() {
           ...sysAdmin,
           password: await bcrypt.hash(sysAdmin.password, 8),
           role: Roles.SYSTEM_ADMIN,
+          first_login: false,
         }))
       ),
     });

@@ -9,6 +9,7 @@ This is a backend web application for an air ticket reservations system created 
 - [Environment Setup](#environment-setup)
 - [Database Setup](#database-setup)
 - [Running the Application](#running-the-application)
+- [System Admin Accounts](#system-admin-accounts)
 
 ## Prerequisites
 
@@ -67,3 +68,12 @@ Before you begin, ensure you have the following installed:
 
    This command will start the server using `ts-node` in watch mode.
 
+## System Admin Accounts
+
+The system includes three pre-configured system admin accounts for testing purposes. You can use the following credentials to log in:
+
+| Login Name   | Password      |
+|--------------|---------------|
+| sys_admin    | Pa$$word123   |
+| sys_admin1   | Pa$$word123   |
+| sys_admin2   | Pa$$word123   |
