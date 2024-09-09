@@ -8,6 +8,7 @@ import {
 import CustomRequest from "../interfaces/customRequest";
 
 class NationalityController {
+  // @description: create nationality
   // @return 201 status code with success message and created
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -22,6 +23,7 @@ class NationalityController {
     }
   }
 
+  // @description: get all nationalities
   // @return 200 status code with success message and all nationalities
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
@@ -38,6 +40,7 @@ class NationalityController {
     }
   }
 
+  // @description: get one nationality
   // @return 200 status code with success
   // @throw 404 status if nationality not found
   async getOne(req: Request, res: Response, next: NextFunction) {
@@ -54,6 +57,7 @@ class NationalityController {
     }
   }
 
+  // @description: update nationality details
   // @return 200 status code with success message and updated
   // @throw 404 status if nationality not found
   async update(req: Request, res: Response, next: NextFunction) {
@@ -72,6 +76,7 @@ class NationalityController {
     }
   }
 
+  // @description: delete nationality
   // @return 200 status code with success message
   // @throw 404 status if nationality not found
   async delete(req: Request, res: Response, next: NextFunction) {

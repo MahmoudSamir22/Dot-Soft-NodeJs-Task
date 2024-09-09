@@ -7,6 +7,7 @@ import pug from "pug";
 import CustomRequest from "../interfaces/customRequest";
 
 class AuthController {
+  // @description: signup user
   // @return 201 status code with success message and created user
   // @throw 400 status code if phone already exists
   // @throw 400 status code if email already exists
@@ -24,6 +25,7 @@ class AuthController {
     }
   }
 
+  // @description: login user
   // @return 200 status code with success message and logged in user with token
   // @throw 400 status code if user not found
   // @throw 400 status code if password is incorrect
@@ -42,6 +44,7 @@ class AuthController {
     }
   }
 
+  // @description: forget password and send otp to email
   // @return 200 status code with success message and logged in user with token
   // @throw 404 status code if user not found
   async forgetPassword(req: Request, res: Response, next: NextFunction) {
@@ -61,6 +64,7 @@ class AuthController {
     }
   }
 
+  // @description: verify reset code
   // @return 200 status code with success message
   // @throw 404 status code if user not found
   async verifyResetCode(req: Request, res: Response, next: NextFunction) {
@@ -75,6 +79,7 @@ class AuthController {
     }
   }
 
+  // @description: reset password
   // @return 200 status code with success message
   // @throw 404 status code if user not found
   async resetPassword(req: Request, res: Response, next: NextFunction) {
@@ -89,6 +94,7 @@ class AuthController {
     }
   }
 
+  // @description: change password if it was auto generated
   // @return 200 status code with success message
   // @throw 404 status code if user not found
   // @throw 400 status code if password is incorrect
@@ -110,6 +116,7 @@ class AuthController {
     }
   }
 
+  // @description: add airway representative
   // @return 201 status code with success message
   // @throw 400 status code if phone already exists
   // @throw 400 status code if email already exists
@@ -132,6 +139,7 @@ class AuthController {
     }
   }
 
+  // @description: change password
   // @return 200 status code with success message
   // @throw 400 status code if old password is incorrect
   async changePassword(req: Request, res: Response, next: NextFunction) {

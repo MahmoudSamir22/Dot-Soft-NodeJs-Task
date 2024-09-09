@@ -9,6 +9,7 @@ import {
 } from "../utils/serialization/ticket.serialization";
 
 class TicketController {
+  // @description: book ticket
   // @return 201 status code with success message and created ticket
   // @throw 400 status code if user is not in a company
   async bookTicket(req: Request, res: Response, next: NextFunction) {
@@ -29,6 +30,7 @@ class TicketController {
     }
   }
 
+  // @description: get all tickets
   // @return 200 status code with success message and all tickets
   async getMyTickets(req: Request, res: Response, next: NextFunction) {
     try {
@@ -45,6 +47,7 @@ class TicketController {
     }
   }
 
+  // @description: get all reservations
   // @return 200 status code with success message and all reservations
   async getMyReservations(req: Request, res: Response, next: NextFunction) {
     try {
@@ -61,6 +64,7 @@ class TicketController {
     }
   }
 
+  // @description: get all tickets
   // @return 200 status code with success message and all tickets
   // @throw 404 status code if user not found
   async getOne(req: Request, res: Response, next: NextFunction) {
@@ -77,6 +81,7 @@ class TicketController {
     }
   }
 
+  // @description: cancel ticket
   // @return 200 status code with success message and updated ticket
   // @throw 404 status code if ticket not found
   async cancel(req: Request, res: Response, next: NextFunction) {

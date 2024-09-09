@@ -8,6 +8,7 @@ import {
 import CustomRequest from "../interfaces/customRequest";
 
 class AirPortController {
+  // @description: create air port
   // @return 201 status code with success message and created air port
   async create(req: Request, res: Response, next: NextFunction) {
     try {
@@ -22,6 +23,7 @@ class AirPortController {
     }
   }
  
+  // @description: get all air ports
   // @return 200 status code with success message and all air ports
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
@@ -38,6 +40,7 @@ class AirPortController {
     }
   }
 
+  // @description: get one air port
   // @return 200 status code with success message and one air
   // @throw 404 status code if air port not found
   async getOne(req: Request, res: Response, next: NextFunction) {
@@ -54,6 +57,7 @@ class AirPortController {
     }
   }
 
+  // @description: update air port
   // @return 200 status code with success message and updated
   // @throw 404 status code if air port not found
   async update(req: Request, res: Response, next: NextFunction) {
@@ -69,6 +73,7 @@ class AirPortController {
     }
   }
 
+  // @description: delete air port
   // @return 200 status code with success message
   // @throw 404 status code if air port not found
   async delete(req: Request, res: Response, next: NextFunction) {
