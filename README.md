@@ -1,6 +1,6 @@
-# Project Name
+# Dot Soft Backend Task
 
-This is a backend project created using Node.js, TypeScript, Prisma, and PostgreSQL. The goal of this project is to demonstrate the installation and setup of a robust backend environment.
+This is a backend project created using Node.js, TypeScript, Prisma, and PostgreSQL.
 
 ## Table of Contents
 
@@ -15,8 +15,8 @@ This is a backend project created using Node.js, TypeScript, Prisma, and Postgre
 
 Before you begin, ensure you have the following installed:
 
-- Node.js (version 16 or above)
-- npm (version 7 or above)
+- Node.js (version 18 or above)
+- npm (version 10 or above)
 - PostgreSQL (latest version recommended)
 - Git
 
@@ -27,8 +27,6 @@ Before you begin, ensure you have the following installed:
    ```bash
    git clone https://github.com/MahmoudSamir22/Dot-Soft-NodeJs-Task.git
    ```
-
-   Replace `https://github.com/MahmoudSamir22/Dot-Soft-NodeJs-Task.git` with the URL of your repository.
 
 2. **Navigate to the project directory:**
 
