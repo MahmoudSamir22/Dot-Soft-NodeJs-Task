@@ -27,6 +27,15 @@ class TicketService implements ITicketService {
         where: {
           userId,
         },
+        include: {
+          Flight: {
+            include: {
+              Departure_Airport: true,
+              Arrival_Airport: true,
+              Airway_Company: true,
+            },
+          },
+        },
       },
       query.page,
       query.limit
@@ -43,6 +52,15 @@ class TicketService implements ITicketService {
         where: {
           operatorId: userId,
         },
+        include: {
+          Flight: {
+            include: {
+              Departure_Airport: true,
+              Arrival_Airport: true,
+              Airway_Company: true,
+            },
+          },
+        },
       },
       query.page,
       query.limit
@@ -55,8 +73,14 @@ class TicketService implements ITicketService {
         id,
       },
       include: {
-        Flight: true,
-      },
+        Flight: {
+          include: {
+            Departure_Airport: true,
+            Arrival_Airport: true,
+            Airway_Company: true,
+          }
+        }
+      }
     });
     if (!ticket) throw new ApiError("Ticket not found", 404);
     return ticket;

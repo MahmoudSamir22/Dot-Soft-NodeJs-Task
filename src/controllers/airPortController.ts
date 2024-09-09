@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import response from "../utils/response";
 import airPortService from "../services/airPortService";
+import {
+  airportSerialization,
+  airportsSerialization,
+} from "../utils/serialization/airport.serialization";
+import CustomRequest from "../interfaces/customRequest";
 
 class AirPortController {
   async create(req: Request, res: Response, next: NextFunction) {
@@ -18,12 +23,13 @@ class AirPortController {
 
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const {data, pagination} = await airPortService.getAll(req.query);
+      const { language, skipLang } = req as CustomRequest;
+      const { data, pagination } = await airPortService.getAll(req.query);
       response(res, 200, {
         status: true,
         message: "Air Ports fetched successfully",
         pagination,
-        data,
+        data: skipLang ? data : airportsSerialization(data, language),
       });
     } catch (error) {
       next(error);
@@ -32,11 +38,12 @@ class AirPortController {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
+      const { language, skipLang } = req as CustomRequest;
       const airPort = await airPortService.getOne(+req.params.id);
       response(res, 200, {
         status: true,
         message: "Air Port Fetched Successfully",
-        data: airPort,
+        data: skipLang ? airPort : airportSerialization(airPort, language),
       });
     } catch (error) {
       next(error);
@@ -45,10 +52,7 @@ class AirPortController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const airPort = await airPortService.update(
-        +req.params.id,
-        req.body
-      );
+      const airPort = await airPortService.update(+req.params.id, req.body);
       response(res, 200, {
         status: true,
         message: "Air Port Updated Successfully",

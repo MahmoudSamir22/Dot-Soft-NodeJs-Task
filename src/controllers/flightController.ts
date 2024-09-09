@@ -3,13 +3,17 @@ import flightService from "../services/flightService";
 import CustomRequest from "../interfaces/customRequest";
 import response from "../utils/response";
 import ApiError from "../utils/ApiError";
+import {
+  flightSerialization,
+  flightsSerialization,
+} from "../utils/serialization/flight.serialization";
 
 class FlightController {
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-        const { userId, companyId } = req as CustomRequest;
-        if (!companyId) {
-          throw new ApiError("You are not in a company", 400);
+      const { userId, companyId } = req as CustomRequest;
+      if (!companyId) {
+        throw new ApiError("You are not in a company", 400);
       }
       const flight = await flightService.create({
         ...req.body,
@@ -28,11 +32,13 @@ class FlightController {
 
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const flights = await flightService.getAll(req.query);
+      const { language, skipLang } = req as CustomRequest;
+      const { data, pagination } = await flightService.getAll(req.query);
       response(res, 200, {
         status: true,
         message: "Flights fetched",
-        data: flights,
+        pagination,
+        data: skipLang ? data : flightsSerialization(data, language),
       });
     } catch (error) {
       next(error);
@@ -41,11 +47,12 @@ class FlightController {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
+      const { language, skipLang } = req as CustomRequest;
       const flight = await flightService.getOne(+req.params.id);
       response(res, 200, {
         status: true,
         message: "Flight fetched",
-        data: flight,
+        data: skipLang ? flight : flightSerialization(flight, language),
       });
     } catch (error) {
       next(error);

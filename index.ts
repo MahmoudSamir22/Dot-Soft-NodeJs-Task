@@ -5,6 +5,7 @@ config();
 import router from "./src/routers";
 import globalError from "./src/middlewares/errorMiddleware";
 import seeding from "./prisma/seeding";
+import setLanguage from "./src/middlewares/set-language";
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 app.use("/assets", express.static("assets"));
+
+// Set Localized Language
+app.use(setLanguage);
 
 app.use("/api", router);
 app.all("*", (req, res, next) => {

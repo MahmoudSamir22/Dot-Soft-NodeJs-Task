@@ -2,8 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import response from "../utils/response";
 import ticketService from "../services/ticketService";
 import CustomRequest from "../interfaces/customRequest";
-import ApiError from "../utils/ApiError";
 import { Roles } from "../enum/user.enums";
+import {
+  ticketSerialization,
+  ticketsSerialization,
+} from "../utils/serialization/ticket.serialization";
 
 class TicketController {
   async bookTicket(req: Request, res: Response, next: NextFunction) {
@@ -26,12 +29,13 @@ class TicketController {
 
   async getMyTickets(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req as CustomRequest;
-      const tickets = await ticketService.getMyTickets(userId, req.query);
+      const { userId, skipLang, language } = req as CustomRequest;
+      const {data, pagination} = await ticketService.getMyTickets(userId, req.query);
       response(res, 200, {
         status: true,
         message: "Tickets fetched",
-        data: tickets,
+        pagination,
+        data: skipLang ? data : ticketsSerialization(data, language),
       });
     } catch (error) {
       next(error);
@@ -40,12 +44,13 @@ class TicketController {
 
   async getMyReservations(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req as CustomRequest;
-      const tickets = await ticketService.getMyReservations(userId, req.query);
+      const { userId, skipLang, language } = req as CustomRequest;
+      const {data, pagination} = await ticketService.getMyReservations(userId, req.query);
       response(res, 200, {
         status: true,
         message: "Tickets fetched",
-        data: tickets,
+        pagination,
+        data: skipLang ? data : ticketsSerialization(data, language),
       });
     } catch (error) {
       next(error);
@@ -54,11 +59,12 @@ class TicketController {
 
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
+      const { skipLang, language } = req as CustomRequest;
       const ticket = await ticketService.getOne(+req.params.id);
       response(res, 200, {
         status: true,
         message: "Ticket fetched",
-        data: ticket,
+        data: skipLang ? ticket : ticketSerialization(ticket, language),
       });
     } catch (error) {
       next(error);
