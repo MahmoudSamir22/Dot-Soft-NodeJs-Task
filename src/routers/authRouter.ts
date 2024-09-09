@@ -7,6 +7,7 @@ import {
   changeFirstTimePasswordSchema,
   addAirwayRepresentativeSchema,
   changePasswordSchema,
+  resetPasswordSchema,
 } from "../validations/authValidation";
 import auth from "../middlewares/auth";
 const router = Router();
@@ -29,7 +30,11 @@ router.post("/forget-password", authController.forgetPassword);
 
 router.post("/verify-reset-code", authController.verifyResetCode);
 
-router.post("/reset-password", authController.resetPassword);
+router.post(
+  "/reset-password",
+  joiMiddleware(resetPasswordSchema),
+  authController.resetPassword
+);
 
 router.post(
   "/first-time-password",
@@ -45,7 +50,7 @@ router.post(
 
 router.post(
   "/change-password",
-  auth ,
+  auth,
   joiMiddleware(changePasswordSchema),
   authController.changePassword
 );
