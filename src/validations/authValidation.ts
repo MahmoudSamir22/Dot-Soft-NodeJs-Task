@@ -1,5 +1,9 @@
 import Joi from "joi";
-import { SignUpType, LoginType } from "../types/authType";
+import {
+  SignUpType,
+  LoginType,
+  ChangeFirstTimeLoginPassword,
+} from "../types/authType";
 import { Genders, Titles } from "../enum/user.enums";
 
 export const registerValidationSchema = Joi.object<SignUpType>().keys({
@@ -26,3 +30,10 @@ export const loginValidationSchema = Joi.object<LoginType>().keys({
   user_name: Joi.string().required(),
   password: Joi.string().required(),
 });
+
+export const changeFirstTimePasswordSchema =
+  Joi.object<ChangeFirstTimeLoginPassword>().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    newPassword: Joi.string().required(),
+  });

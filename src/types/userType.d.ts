@@ -31,6 +31,7 @@ export type UserProfile = {
   first_name: string;
   father_name: string | null;
   family_name: string;
+  role: string;
   gender: string;
   email: string;
   phone: string;

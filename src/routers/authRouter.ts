@@ -4,6 +4,7 @@ import joiMiddleware from "../middlewares/joiMiddleware";
 import {
   registerValidationSchema,
   loginValidationSchema,
+  changeFirstTimePasswordSchema
 } from "../validations/authValidation";
 const router = Router();
 
@@ -26,5 +27,11 @@ router.post("/forget-password", authController.forgetPassword);
 router.post("/verify-reset-code", authController.verifyResetCode);
 
 router.post("/reset-password", authController.resetPassword);
+
+router.post(
+  "/first-time-password",
+  joiMiddleware(changeFirstTimePasswordSchema),
+  authController.changeFirstTimePassword
+);
 
 export default router;

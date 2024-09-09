@@ -35,3 +35,8 @@ export type ResetPassword = {
     password: string;
 }
 
+export type ChangeFirstTimeLoginPassword = {
+    email: string;
+    password: string;
+    newPassword: string;
+}
