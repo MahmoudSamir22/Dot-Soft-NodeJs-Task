@@ -226,7 +226,7 @@ class AuthService implements IAuthService {
     });
     if (!user) throw new ApiError("User not found", 404);
     const passwordMatch = await bcrypt.compare(data.oldPassword, user.password);
-    if (!passwordMatch) throw new ApiError("Incorrect password", 400);
+    if (!passwordMatch) throw new ApiError("Old password is incorrect", 400);
     await prisma.user.update({
       where: {
         id: userId,

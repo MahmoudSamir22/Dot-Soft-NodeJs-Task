@@ -38,5 +38,5 @@ export type TicketQuery = Partial<
 >;
 
 export type CancelationReason = {
-  reason: string;
+  reason?: string;
 };
